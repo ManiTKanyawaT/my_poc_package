@@ -36,6 +36,7 @@ class _MyPocFormState extends State<MyPocForm> {
             decoration: InputDecoration(
               labelText: widget.labelText,
               border: const OutlineInputBorder(),
+              labelStyle: const TextStyle(color: Colors.black),
             ),
             validator: _validateInput,
           ),
@@ -44,15 +45,22 @@ class _MyPocFormState extends State<MyPocForm> {
             onPressed: () {
               if (_formKey.currentState?.validate() ?? false) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Valid input!')),
+                  const SnackBar(
+                      content: Text(
+                    'Valid input!',
+                    style: TextStyle(color: Colors.black),
+                  )),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Invalid input')),
+                  const SnackBar(
+                    content: Text('Invalid input',
+                        style: TextStyle(color: Colors.black)),
+                  ),
                 );
               }
             },
-            child: const Text('Submit'),
+            child: const Text('Submit', style: TextStyle(color: Colors.black)),
           ),
         ],
       ),
