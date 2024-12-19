@@ -1,7 +1,63 @@
 library my_poc_package;
 
-/// A simple class that greets users.
-class AwesomeGreeter {
-  /// Greet the user with their name.
-  String greet(String name) => 'Hello, $name! Welcome to My Awesome Package!';
+import 'package:flutter/material.dart';
+
+class AnimatedTextFormField extends StatefulWidget {
+  final String labelText;
+  final TextEditingController controller;
+
+  const AnimatedTextFormField(
+      {super.key, required this.labelText, required this.controller});
+
+  @override
+  State<AnimatedTextFormField> createState() => _AnimatedTextFormFieldState();
+}
+
+class _AnimatedTextFormFieldState extends State<AnimatedTextFormField>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _animation.value,
+          child: TextFormField(
+            controller: widget.controller,
+            decoration: InputDecoration(
+              labelText: widget.labelText,
+            ),
+            onTap: () {
+              _animationController.forward();
+            },
+            onEditingComplete: () {
+              _animationController.reverse();
+            },
+          ),
+        );
+      },
+    );
+  }
 }
