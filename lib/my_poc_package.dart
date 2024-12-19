@@ -47,8 +47,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField>
           child: TextFormField(
             controller: widget.controller,
             decoration: InputDecoration(
-              labelText: widget.labelText,
-            ),
+                labelText: widget.labelText, fillColor: Colors.amber),
             onTap: () {
               _animationController.forward();
             },
