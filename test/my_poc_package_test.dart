@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_poc_package/my_poc_package.dart';
 
 void main() {
-  testWidgets('CharacterValidationForm validates input correctly',
+  testWidgets('MyPocForm validates input correctly',
       (WidgetTester tester) async {
     final controller = TextEditingController();
 
@@ -11,7 +11,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: CharacterValidationForm(
+          body: MyPocForm(
             labelText: 'Enter Text',
             controller: controller,
           ),

@@ -2,19 +2,18 @@ library my_poc_package;
 
 import 'package:flutter/material.dart';
 
-class CharacterValidationForm extends StatefulWidget {
+class MyPocForm extends StatefulWidget {
   final String labelText;
   final TextEditingController controller;
 
-  const CharacterValidationForm(
+  const MyPocForm(
       {super.key, required this.labelText, required this.controller});
 
   @override
-  State<CharacterValidationForm> createState() =>
-      _CharacterValidationFormState();
+  State<MyPocForm> createState() => _MyPocFormState();
 }
 
-class _CharacterValidationFormState extends State<CharacterValidationForm> {
+class _MyPocFormState extends State<MyPocForm> {
   final _formKey = GlobalKey<FormState>();
 
   String? _validateInput(String? value) {
@@ -33,12 +32,12 @@ class _CharacterValidationFormState extends State<CharacterValidationForm> {
       child: Column(
         children: <Widget>[
           TextFormField(
-            controller: widget.controller, 
+            controller: widget.controller,
             decoration: InputDecoration(
-              labelText: widget.labelText, 
+              labelText: widget.labelText,
               border: const OutlineInputBorder(),
             ),
-            validator: _validateInput, 
+            validator: _validateInput,
           ),
           const SizedBox(height: 20),
           ElevatedButton(
