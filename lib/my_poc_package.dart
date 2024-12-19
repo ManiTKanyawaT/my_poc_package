@@ -46,14 +46,16 @@ class _MyPocFormState extends State<MyPocForm> {
               if (_formKey.currentState?.validate() ?? false) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
+                      backgroundColor: Colors.redAccent,
                       content: Text(
-                    'Valid input!',
-                    style: TextStyle(color: Colors.black),
-                  )),
+                        'Valid input!',
+                        style: TextStyle(color: Colors.black),
+                      )),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
+                    backgroundColor: Colors.redAccent,
                     content: Text('Invalid input',
                         style: TextStyle(color: Colors.black)),
                   ),
