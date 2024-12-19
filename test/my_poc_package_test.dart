@@ -1,40 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_poc_package/my_poc_package.dart'; // Import your package
+import 'package:my_poc_package/my_poc_package.dart';
 
 void main() {
-  testWidgets('AnimatedTextFormField scales on tap', (WidgetTester tester) async {
-  final controller = TextEditingController();
+  testWidgets('CharacterValidationForm validates input correctly',
+      (WidgetTester tester) async {
+    final controller = TextEditingController();
 
-  // Build the widget tree
-  await tester.pumpWidget(
-    MaterialApp(
-      home: Scaffold(
-        body: SingleChildScrollView(  // Wrap with SingleChildScrollView
-          child: AnimatedTextFormField(
+    // Build the widget tree
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CharacterValidationForm(
             labelText: 'Enter Text',
             controller: controller,
           ),
         ),
       ),
-    ),
-  );
+    );
 
-  // Verify that the TextFormField exists
-  expect(find.byType(TextFormField), findsOneWidget);
+    // Verify that the TextFormField exists
+    expect(find.byType(TextFormField), findsOneWidget);
 
-  // Scroll the widget into view if needed
-  await tester.scrollUntilVisible(
-    find.byType(TextFormField),
-    500.0,
-  );
+    // Step 1: Enter invalid input (numbers)
+    await tester.enterText(find.byType(TextFormField), '123'); // Invalid input
+    await tester.tap(find.byType(ElevatedButton)); // Press Submit button
+    await tester.pumpAndSettle(); // Wait for SnackBar to appear
 
-  // Tap on the TextFormField to trigger the animation
-  await tester.tap(find.byType(TextFormField));
-  await tester.pumpAndSettle(); // Wait for animation to settle
+    // Step 2: Verify that the error message ("Only alphabetic characters are allowed") is shown
+    expect(find.text('Only alphabetic characters are allowed'), findsOneWidget);
 
-  // Optionally, print out some debug information here:
-  print('Widget tapped, animation should have occurred now.');
-});
+    // Step 3: Now enter valid input (alphabetic characters)
+    await tester.enterText(find.byType(TextFormField), 'Hello'); // Valid input
+    await tester.tap(find.byType(ElevatedButton)); // Press Submit button
+    await tester.pumpAndSettle(); // Wait for SnackBar to appear
 
+    expect(find.byType(SnackBar), findsOneWidget); // Verify that SnackBar is shown
+
+    // Step 4: Ensure that no error message ("Only alphabetic characters are allowed") is shown after valid input
+    expect(find.text('Only alphabetic characters are allowed'), findsNothing);
+  });
 }
